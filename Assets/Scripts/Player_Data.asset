@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af4e97da7ff21ab40a8ed50a0334bcf1, type: 3}
+  m_Name: Player_Data
+  m_EditorClassIdentifier: 
+  MoveSpeed: 4
+  Acceleration: 5
+  jumpSpeed: 5
+  Gravity: 10
+  Walk: {fileID: 0}
+  FootStep_Concrete: []
+  FootStep_Dirt: []
+  FootStep_Metal: []
+  XP: 0
+  Level_XP_Curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 100
+      inSlope: 0.0307988
+      outSlope: 0.0307988
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 2
+      value: 120
+      inSlope: 0.11352693
+      outSlope: 0.11352693
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 80
+      value: 1000
+      inSlope: 28.856829
+      outSlope: 28.856829
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0707138
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
