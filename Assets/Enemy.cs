@@ -7,59 +7,83 @@ public class Enemy : MonoBehaviour, IDamagable
 {
     public Enemy_Data enemy_data;
     internal Transform TR;
+    internal Rigidbody2D body;
     [SerializeField] bool spotted_player = false;
 
+    public float speed = 4f;
     public int AmmoLeft = 60;
-    public float FireRate = 1f;
+    public float fire_timestamp = 0f, FireRate = 1f;
     public float ShootTimeStamp = 0f;
     public bool canShootNow = true;
     public GameObject BulletPrefab;
     internal AudioSource ShootSFX;
-
+    public bool stopped_shooting = false;
+    public float attack_timestamp = 0f, attack_interval = 1f;
+    public float max_distance_to_player = 10f;
+    public Vector2 gravity = new Vector2(0f, 5f);
+    public enum State : byte { idle, running, attacking }
+    public State state = State.idle;
+    float total_attack_interval => attack_interval + FireRate + FireRate * 0.5f;
     private void Awake()
     {
         ShootSFX = GetComponent<AudioSource>();
         TR = transform;
+        body = GetComponent<Rigidbody2D>();
+        var temp_fire = FireRate + FireRate * 0.5f;
+        if (attack_interval < temp_fire)
+            attack_interval = temp_fire;
     }
+    public Vector2 velocity = Vector2.zero;
     private void FixedUpdate()
     {
-        Vector3 current_pos = transform.position;
-        Vector3 added_range = new Vector3(0f, 0f, enemy_data.spotting_range);
-        var hitColliders = Physics2D.OverlapAreaAll(current_pos - added_range, current_pos + added_range);
+        Vector3 current_pos = TR.position;
 
-        for (int i = 0; i < hitColliders.Length; i++)
+        switch (state)
         {
-            if (hitColliders[i] != null && hitColliders[i].gameObject.GetComponent<Player>() != null)
-            {
-                spotted_player = true;
-            }
-            else
-            {
-                spotted_player = false;
-            }
+            case State.idle:
+                state = State.running;
+                break;
+            case State.running:
+                Vector3 vector_difference = current_pos - GameManager.Instance.player.TR.position;
 
+
+                if (attack_timestamp < attack_interval)
+                {
+                    attack_timestamp += Time.fixedDeltaTime;
+
+                    if (vector_difference.x < max_distance_to_player)
+                    {
+                        velocity = -vector_difference.normalized * speed - new Vector3(gravity.x, gravity.y);
+                    }
+                    else
+                    {
+                        velocity = vector_difference.normalized * speed - new Vector3(gravity.x, gravity.y);
+                    }
+                }
+                else
+                {
+                    attack_timestamp = 0f;
+                    velocity.x = 0f;
+                    state = State.attacking;
+                }
+                break;
+            case State.attacking:
+                {
+                    velocity.y = -gravity.y;
+                }
+                break;
         }
-        if (spotted_player)
-        {
-            ShootTimer();
-        }
+        body.MovePosition(velocity * Time.fixedDeltaTime);
     }
-    void ShootTimer()
+    void decide_attack()
     {
-        if (ShootTimeStamp < FireRate && !canShootNow)
-        {
-            ShootTimeStamp += Time.deltaTime;
-        }
-        else if (ShootTimeStamp >= FireRate && !canShootNow)
-        {
-            ShootTimeStamp = 0f;
-            Shoot();
-            canShootNow = true;
-        }
+
     }
+
     public float ShootForce = 20f;
     void Shoot()
     {
+        body.velocity = Vector3.zero;
         canShootNow = false;
         AmmoLeft--;
         ShootSFX.Play();

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6115bc2a4003daf4ab7c2655945cff3a, type: 3}
+  m_Name: MessageBoxData_Level_2
+  m_EditorClassIdentifier: 
+  messageText:
+  - 'DETECTIVE JOE: Here we are, landed in Cali. Hotter than Ny but feels colder...
+    I hate this city, to be honest idk do I like anywhere anymore... But at least
+    my sister wasn''t murdered in NY, so that''s a count I guess...'
+  messagePreferenceIndex: 6

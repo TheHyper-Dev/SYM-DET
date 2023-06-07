@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+
 public class Player : MonoBehaviour, IDamagable
 {
     internal Transform TR;
 
-    public Inventory inventory = new();
     [Header("Locks")]
     public bool MovementEnabled = true;
     public bool LookEnabled = true;
@@ -14,9 +14,12 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] internal Camera playerCamera;
     [SerializeField] internal PlayerUI UI;
 
+    public Transform character_sprite;
+    public Vector3 character_sprite_idle_offset, character_sprite_walking_offset;
     public Player_Data playerData;
     [SerializeField] float HorizontalMoveDirection;
     internal Rigidbody2D body;
+    public Animator animator;
     Vector2 bodyVel;
     public bool Grounded = false;
     public bool Facing_Right = true;
@@ -51,6 +54,8 @@ public class Player : MonoBehaviour, IDamagable
     }
     #endregion
 
+
+    [SerializeField] bool started_walking_once = false;
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -62,18 +67,41 @@ public class Player : MonoBehaviour, IDamagable
         if (!MovementEnabled) return;
         HorizontalMoveDirection = Input.GetAxisRaw("Horizontal");
 
-        if (HorizontalMoveDirection > 0f && !Facing_Right)
+        if (HorizontalMoveDirection > 0f)
         {
-            TR.Rotate(0f, 180f, 0f);
-            Facing_Right = true;
+            if (!Facing_Right)
+            {
+                TR.Rotate(0f, 180f, 0f);
+                Facing_Right = true;
+            }
+            if (!started_walking_once)
+            {
+                character_sprite.localPosition = character_sprite_walking_offset;
+                animator.SetBool("walking", true);
+                started_walking_once = true;
+            }
         }
-        else if (HorizontalMoveDirection < 0f && Facing_Right)
+        else if (HorizontalMoveDirection < 0f)
         {
-            TR.Rotate(0f, 180f, 0f);
-            Facing_Right = false;
+            if (Facing_Right)
+            {
+                character_sprite.localPosition = character_sprite_walking_offset;
+                TR.Rotate(0f, 180f, 0f);
+                Facing_Right = false;
+            }
+            if (!started_walking_once)
+            {
+                character_sprite.localPosition = character_sprite_walking_offset;
+                animator.SetBool("walking", true);
+                started_walking_once = true;
+            }
         }
-
-
+        else if (started_walking_once)
+        {
+            character_sprite.localPosition = character_sprite_idle_offset;
+            animator.SetBool("walking", false);
+            started_walking_once = false;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && Grounded)
         {
@@ -122,9 +150,4 @@ public class Player : MonoBehaviour, IDamagable
             Destroy(pickup.gameObject);
         }
     }
-}
-[Serializable]
-public struct Inventory
-{
-    public List<Pickup> pickups;
 }

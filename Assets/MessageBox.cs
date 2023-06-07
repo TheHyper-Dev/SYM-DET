@@ -1,38 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MessageBox : MonoBehaviour
 {
 
     public Animation anim;
-    public float Duration = 1f;
-    public float TimeStamp = 0f;
-    public bool Counting = false;
-
-    void Start()
+    public MessageBoxData data;
+    public int activeMessageIndex = 0;
+    internal int character_index = 0;
+    [SerializeField] float time_per_character = 0.2f;
+    float timer = 0f;
+    public bool revealing_message = false;
+    [SerializeField] TMP_Text message_TEXT;
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(2.5f);
         anim.Play("MessageFadeIn");
+        revealing_message = true;
+        message_TEXT.enabled = true;
+        GetComponent<Image>().enabled = true;
     }
-
-    void FixedUpdate()
+    private void Update()
     {
-        if (anim["MessageFadeIn"].normalizedTime > 0.95f && !Counting)
+        if (revealing_message && character_index < data.messageTexts[activeMessageIndex].Length)
         {
-            Counting = true;
+
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
+            {
+                timer += time_per_character;
+                character_index++;
+                message_TEXT.text = data.messageTexts[activeMessageIndex].Substring(0, character_index); //substring shortcut, nvm
+            }
         }
-        if (Counting && TimeStamp < Duration)
+        else if (revealing_message && character_index >= data.messageTexts[activeMessageIndex].Length)
         {
-            TimeStamp += Time.fixedDeltaTime;
+            revealing_message = false;
         }
-        else if (TimeStamp >= Duration && Counting)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            TimeStamp = Duration;
-            anim["MessageFadeIn"].speed = -0.5f;
-            anim["MessageFadeIn"].normalizedTime = 0.8f;
-            anim.Play("MessageFadeIn", PlayMode.StopAll);
-            Destroy(gameObject, anim["MessageFadeIn"].length * 1.6f);
-            Counting = false;
+            if (character_index < data.messageTexts[activeMessageIndex].Length)
+            {
+                character_index = data.messageTexts[activeMessageIndex].Length - 1;
+            }
+            else //finished revealing
+            {
+                character_index = 0;
+                if (activeMessageIndex < data.messageTexts.Length)
+                {
+                    activeMessageIndex++;
+                    timer = -1f;
+                    revealing_message = true;
+                }
+                else
+                {
+                    revealing_message = false;
+                    GameManager.Instance.scene_anim.Play("scene_fade_out");
+                    anim.Play("MessageFadeOut");
+                    activeMessageIndex = 0;
+                }
+            }
         }
     }
 }

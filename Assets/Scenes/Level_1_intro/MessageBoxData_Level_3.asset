@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6115bc2a4003daf4ab7c2655945cff3a, type: 3}
+  m_Name: MessageBoxData_Level_3
+  m_EditorClassIdentifier: 
+  messageTexts:
+  - 'DETECTIVE JOE: Surprisingly today is my day I guess, I catch the taxi right
+    away. I hope he''s not a much talker... I hate small talk...'
+  - 'TAXI DRIVER: Hey there where are we heading?'
+  - 'DETECTIVE JOE: The Center Hotel.'
+  - 'TAXI DRIVER: You don''t look like from here.'
+  - 'DETECTIVE JOE: I''m not, this place is not for me.'
+  - "TAXI DRIVER: So I guess you come for business, what\u2019s your job."
+  - 'DETECTIVE JOE: I''m a detective.'
+  - 'TAXI DRIVER: Glad to hear that the corruption and crime rate in this city is
+    getting higher every day.'
+  - 'DETECTIVE JOE: I''m here to fix some of them.'
+  - 'TAXI DRIVER: Here is the hotel detective good luck.'
+  messagePreferenceIndex: 6

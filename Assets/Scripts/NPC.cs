@@ -61,23 +61,23 @@ public class NPC : MonoBehaviour
                 GameManager.Instance.player.LookEnabled = false;
 
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (character_index < npc_data.messageText[activeMessageIndex].Length)
-                {
-                    character_index = npc_data.messageText[activeMessageIndex].Length - 1;
-                }
-                else
-                {
-                    character_index = 0;
-                    activeMessageIndex++;
-                    if (activeMessageIndex >= npc_data.messageText.Length)
-                    {
-                        Close_NPC_Message();
-                        InteractingWithPlayer = false;
-                    }
-                }
-            }
+            //else if (Input.GetKeyDown(KeyCode.Space))
+            //{
+            //    if (character_index < npc_data.messageText[activeMessageIndex].Length)
+            //    {
+            //        character_index = npc_data.messageText[activeMessageIndex].Length - 1;
+            //    }
+            //    else
+            //    {
+            //        character_index = 0;
+            //        activeMessageIndex++;
+            //        if (activeMessageIndex >= npc_data.messageText.Length)
+            //        {
+            //            Close_NPC_Message();
+            //            InteractingWithPlayer = false;
+            //        }
+            //    }
+            //}
         }
     }
     void Close_NPC_Message()
