@@ -67,6 +67,7 @@ public class Gun : MonoBehaviour
         ShootSFX.Play();
         player.UI.AmmoCountText.text = AmmoLeft.ToString();
         var bullet = Instantiate(BulletPrefab);
+        bullet.GetComponent<Bullet>().owner = gameObject;
         bullet.transform.position = TR.position + (TR.right * 0.5f);
         bullet.transform.rotation = player.GunHolder.rotation;
         bullet.GetComponent<Rigidbody2D>().velocity = ShootForce * TR.right;

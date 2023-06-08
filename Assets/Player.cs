@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IDamagable
 {
@@ -40,9 +42,18 @@ public class Player : MonoBehaviour, IDamagable
 
     public void Die()
     {
-
+        StartCoroutine(doDie());
     }
-
+    IEnumerator doDie()
+    {
+        MovementEnabled = false;
+        LookEnabled = false;
+        GameManager.Instance.scene_anim.Play("scene_fade_out");
+        animator.Play("joe_death");
+        GunHolder.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     public void GivingDamage(int damage, IDamagable Receiver)
     {
         Debug.Log("done " + damage + "damage to " + Receiver.TR.name);

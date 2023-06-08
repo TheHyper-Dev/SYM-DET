@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6115bc2a4003daf4ab7c2655945cff3a, type: 3}
   m_Name: MessageBoxData_Level_1
   m_EditorClassIdentifier: 
-  messageText:
+  messageTexts:
   - 'DETECTIVE JOE: I don''t like flights, they remind me of her, my sister... It
     feels like I''m trapped in a box like her... The only difference is, I''m in
     the sky but she is six feet under... And I''m only flying for the one who put

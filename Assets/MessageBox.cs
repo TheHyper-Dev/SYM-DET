@@ -17,11 +17,11 @@ public class MessageBox : MonoBehaviour
     [SerializeField] TMP_Text message_TEXT;
     IEnumerator Start()
     {
+
         yield return new WaitForSeconds(2.5f);
         anim.Play("MessageFadeIn");
         revealing_message = true;
         message_TEXT.enabled = true;
-        GetComponent<Image>().enabled = true;
     }
     private void Update()
     {
@@ -49,7 +49,7 @@ public class MessageBox : MonoBehaviour
             else //finished revealing
             {
                 character_index = 0;
-                if (activeMessageIndex < data.messageTexts.Length)
+                if (activeMessageIndex < data.messageTexts.Length - 1)
                 {
                     activeMessageIndex++;
                     timer = -1f;
@@ -60,7 +60,8 @@ public class MessageBox : MonoBehaviour
                     revealing_message = false;
                     GameManager.Instance.scene_anim.Play("scene_fade_out");
                     anim.Play("MessageFadeOut");
-                    activeMessageIndex = 0;
+                    //activeMessageIndex = 0;
+                    StartCoroutine(GameManager.load_level(GameManager.Instance.scene_anim["scene_fade_out"].length, GameManager.Instance.level_index + 1));
                 }
             }
         }

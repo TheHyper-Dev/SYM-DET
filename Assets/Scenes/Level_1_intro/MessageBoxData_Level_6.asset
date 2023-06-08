@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6115bc2a4003daf4ab7c2655945cff3a, type: 3}
+  m_Name: MessageBoxData_Level_6
+  m_EditorClassIdentifier: 
+  messageTexts:
+  - 'OFFICER: Man what happened, you good?'
+  - "DETECTIVE JOE: I had better days. I was attacked on my way here, I think some
+    folks heard that I'm in Cali.\r"
+  - "OFFICER: Can you identify them?\r"
+  - "DETECTIVE JOE: I can but after the reason why I came here. I wanna talk to him
+    first, Tom Garcia. \r"
+  - "OFFICER: Okay follow me he is in the cell downstairs. \r"
+  messagePreferenceIndex: 6
